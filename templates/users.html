@@ -1,0 +1,67 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+
+{% block title %}Users{% endblock %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="container">
+    {% for message in messages %}
+    <div class="col-sm-12" align="center">
+      <h3>{{ message }}</h3>
+    </div>
+    {% endfor %}
+ </div>
+  {% endif %}
+{% endwith %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Users</h1>
+            <table class="table">
+                <thead>
+                <td>Name</td>
+                <td>E-Mail</td>
+                <td>Phone</td>
+                </thead>
+                {% for user in items_on_page: %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td><a href="{{ url_for('delete', id=user.id) }}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+
+                {% if page > 1 %}
+                <a href="{{ url_for('users', page=page -1) }}">Previous</a>
+                {% endif %}
+
+                <span> Page {{page}} of {{total_pages}} </span>
+
+                {% if page < total_pages %}
+                <a href="{{ url_for('users', page=page +1) }}">Next</a>
+                {% endif %}
+
+                <div class="col-sm-4">
+                    <h3>Add New User</h3>
+                    {{ wtf.quick_form(form, novalidate=True) }}
+                </div>
+        </div>
+    </div>
+ <div class="col-sm-12">
+   <p>
+     <a href="{{ url_for('home') }}">Return To Home Page</a>
+    </p>
+</div>
+</div>
+
+
+{% endblock %}
