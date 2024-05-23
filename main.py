@@ -47,9 +47,9 @@ def users():
 
     form = Add()
     if form.validate_on_submit():
-        name = form.name.data
-        email = form.email.data
-        phone = form.phone.data
+        name = form.name.data.strip()
+        email = form.email.data.strip()
+        phone = form.phone.data.strip()
         if request.method == "POST":
             new_user = User(
                 name=name,
