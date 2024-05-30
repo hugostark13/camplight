@@ -87,8 +87,8 @@ def search():
 @app.route("/delete", methods=["GET", "DELETE"])
 def delete():
     user_id = request.args.get("id")
-    selected_cafe = User.query.get(user_id)
-    db.session.delete(selected_cafe)
+    selected_users = User.query.get(user_id)
+    db.session.delete(selected_users)
     db.session.commit()
     return redirect(url_for("users"))
 
